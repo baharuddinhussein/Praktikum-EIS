@@ -1,0 +1,29 @@
+#include <Wire.h> 
+#include <LiquidCrystal_I2C.h>
+
+LiquidCrystal_I2C lcd(0x27, 16, 2);  // Alamat I2C LCD 16x2
+int pirPin = 2;  // Pin sensor PIR terhubung ke pin 2 pada Arduino
+
+void setup() {
+  pinMode(pirPin, INPUT);  // Set pin sensor PIR sebagai input
+  lcd.init();  // Inisialisasi LCD
+  lcd.backlight();  // Nyalakan backlight LCD
+  lcd.setCursor(0, 0);
+  lcd.print("Sensor PIR");
+}
+
+void loop() {
+  int val = digitalRead(pirPin);  // Baca nilai dari sensor PIR
+
+  if (val == HIGH) {  // Jika gerakan terdeteksi
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Gerakan Terdeteksi");
+    delay(1000);  // Tunggu 1 detik
+  } else {  // Jika tidak ada gerakan
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Tidak Ada Gerakan");
+    delay(1000);  // Tunggu 1 detik
+  }
+}
